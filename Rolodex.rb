@@ -1,22 +1,19 @@
-class Rolodex
-  def initialize (contacts=0,temp=0)
-    @temp = {}
+class Rolodex<Contact
+  def initialize (contacts=nil)
     @id = 1000
-    @contacts={}
+    @contacts=[]
   end
 
-  attr_accessor(:contacts, :id)
+  attr_accessor(:contacts)
 
-  # def contacts
-  #   @contacts
+  # def add(contact)
+  #   assign_id(contact)
+  #   @contacts << contact
   # end
 
-  def push(temp)
-    @contacts.store(@id,temp)
-    # puts @temp
-    # @contacts.merge!(@temp)
+  def assign_id(i_contact)
+    i_contact.id=@id
+    @contacts<<(i_contact)
     @id += 1
-    # puts @id
-    # puts @contacts
   end
 end
