@@ -1,7 +1,8 @@
-
+# The following line clears the screen
 puts "\e[H\e[2J"
 
 class CRM
+
   def initialize
     @user=Rolodex.new
   end
@@ -17,15 +18,13 @@ class CRM
   end
 
   def main_menu
-
     user_selected=0
     until user_selected>=1 && user_selected<=6
       print_main_menu
       user_selected = gets.to_i
     end
-  call_option(user_selected)
+    call_option(user_selected)
   end
-
 
   def call_option(user_selected)
     add_new_contact if user_selected == 1
@@ -49,7 +48,6 @@ class CRM
       note = gets.chomp
       id=nil
       @contact = Contact.new(id, first_name, last_name, email, note)
-      #puts "Contact ID: #{@contact.id}"
       puts "Fist name: #{@contact.first_name}"
       puts "Last name: #{@contact.last_name}"
       puts "email: #{@contact.email}"
@@ -57,27 +55,31 @@ class CRM
       puts "Confirm the above entry?(y/n)"
       input=gets.chomp.downcase
     end
+
     @user.assign_id(@contact)
     puts "New contact #{@user.contacts[-1].first_name} #{@user.contacts[-1].last_name} is now added to ID: #{@user.contacts[-1].id}"
     main_menu
   end
+  
   def modify_existing_contact
-      puts "\e[H\e[2J"
-      @user.contacts.each do |key|
-        puts "Contact ID: #{key.id} #{key.first_name} #{key.last_name}"
-      end
-      id_list=[]
-      @user.contacts.each do |key|
-       id_list<<key.id
-      end
-      id=nil
-      until id_list.include?(id)
-       puts "Input the id you wish to modify:"
-       id=gets.chomp.to_i
-      end
-      index=id_list.index(id)
-      option=0
-      until option >=1 && option <=5
+    puts "\e[H\e[2J"
+    @user.contacts.each do |key|
+      puts "Contact ID: #{key.id} #{key.first_name} #{key.last_name}"
+    end
+    id_list=[]
+    @user.contacts.each do |key|
+     id_list<<key.id
+    end
+    
+    id=nil 
+    until id_list.include?(id)
+      puts "Input the id you wish to modify:"
+      id=gets.chomp.to_i
+    end
+     
+    index=id_list.index(id)
+    option=0
+    until option >=1 && option <=5
       puts "What attribute would you like to modify for ID: #{id}?"
       puts "[1] First name"
       puts "[2] Last name"
@@ -86,8 +88,9 @@ class CRM
       puts "[5] exit"
       puts "Enter a number: "
       option=gets.chomp.to_i
-      end
-      case option
+    end
+    
+    case option
       when 1
         puts"Enter new First name"
         input=gets.chomp.capitalize
@@ -106,37 +109,40 @@ class CRM
         @user.contacts[index].note.replace(input)
       else
         main_menu
-      end
-      modify_existing_contact
+    end
+    
+    modify_existing_contact
   end
+
   def display_all
     puts "\e[H\e[2J"
     @user.contacts.each do |key|
-        puts "Contact ID: #{key.id} #{key.first_name} #{key.last_name}"
-
-        end
-      main_menu
-  end
-  def delete_contact
-      puts "\e[H\e[2J"
-      @user.contacts.each do |key|
-          puts "Contact ID: #{key.id} #{key.first_name} #{key.last_name}"
-        end
-      id_list=[]
-      @user.contacts.each do |key|
-        id_list<<key.id
-      end
-      id=nil
-      until id_list.include?(id)
-        puts "Input the id you want to delete:"
-        id=gets.chomp.to_i
-      end
-      @user.contacts.delete_if do |key|
-        key.id==id
-      end
-      puts"ID: #{id} is now DELETED!"
-      main_menu
+      puts "Contact ID: #{key.id} #{key.first_name} #{key.last_name}"
     end
+    main_menu
+  end
+
+  def delete_contact
+    puts "\e[H\e[2J"
+    @user.contacts.each do |key|
+      puts "Contact ID: #{key.id} #{key.first_name} #{key.last_name}"
+    end
+    id_list=[]
+    @user.contacts.each do |key|
+      id_list<<key.id
+    end
+    id=nil
+    until id_list.include?(id)
+      puts "Input the id you want to delete:"
+      id=gets.chomp.to_i
+    end
+    @user.contacts.delete_if do |key|
+      key.id==id
+    end
+    puts"ID: #{id} is now DELETED!"
+    main_menu
+  end
+
   def display_attr
     option=0
     until option >=1 && option <=4
@@ -147,7 +153,7 @@ class CRM
       puts "[4] note"
       puts "Enter a number: "
       option=gets.chomp.to_i
-      end 
+    end 
     case option 
     when 1
       puts "Display \"First name\" of all contacts:"
@@ -171,11 +177,7 @@ class CRM
       end
     end
     main_menu
-    
-
-    end
-
-
+  end
 
 end
 
